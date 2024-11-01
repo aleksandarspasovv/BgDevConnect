@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 row m-0 p-0">
+        {% if user.is_authenticated %}
+        <!-- Post Creation Area for Authenticated Users -->
+        <div class="col-sm-12">
+            <div class="card card-block card-stretch card-height">
+                <div class="card-header d-flex justify-content-between">
+                    <h4 class="card-title">Create Post</h4>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="user-img">
+                            <img src="{% static 'images/user/1.jpg' %}" alt="user" class="avatar-60 rounded-circle">
+                        </div>
+                        <form class="post-text ml-3 w-100" action="{% url 'create_post' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="text" name="content" class="form-control rounded" placeholder="Write something here..." style="border:none;">
+                            <button type="submit" class="btn btn-primary mt-2">Post</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Displaying Posts -->
+        {% for post in posts %}
+        <div class="col-sm-12">
+            <div class="card card-block card-stretch card-height">
+                <div class="card-body">
+                    <h5>{{ post.title }}</h5>
+                    <p>{{ post.content }}</p>
+                    <div class="comment-area mt-3">
+                        <p>{{ post.comments.count }} Comments</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+            <p>No posts to display.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}My Django App{% endblock %}</title>
+    
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/typography.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+</head>
+<body class="right-column-fixed">
+    <div id="loading">
+        <div id="loading-center"></div>
+    </div>
+
+    <div class="wrapper">
+        <div class="iq-sidebar">
+            <div id="sidebar-scrollbar">
+                <nav class="iq-sidebar-menu">
+                    <ul id="iq-sidebar-toggle" class="iq-menu">
+                        <li class="active">
+                            <a href="{% url 'index' %}"><i class="las la-newspaper"></i><span>Newsfeed</span></a>
+                        </li>
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'profile' user.pk %}"><i class="las la-user"></i><span>Profile</span></a></li>
+                            <li><a href="{% url 'create_post' %}"><i class="las la-plus-circle"></i><span>Create Post</span></a></li>
+                            <li><a href="{% url 'logout' %}"><i class="las la-sign-out-alt"></i><span>Logout</span></a></li>
+                        {% else %}
+                            <li><a href="{% url 'login' %}"><i class="las la-sign-in-alt"></i><span>Login</span></a></li>
+                            <li><a href="{% url 'register' %}"><i class="las la-user-plus"></i><span>Register</span></a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                <div class="p-3"></div>
+            </div>
+        </div>
+
+        <div class="iq-top-navbar">
+            <div class="iq-navbar-custom">
+                <nav class="navbar navbar-expand-lg navbar-light p-0">
+                    <div class="iq-navbar-logo d-flex justify-content-between">
+                        <a href="{% url 'index' %}">
+                            <img src="{% static 'images/logo.png' %}" class="img-fluid" alt="">
+                            <span>My Django App</span>
+                        </a>
+                        <div class="iq-menu-bt align-self-center">
+                            <div class="wrapper-menu">
+                                <div class="main-circle"><i class="ri-menu-line"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="iq-search-bar">
+                        <form action="#" class="searchbox">
+                            <input type="text" class="text search-input" placeholder="Search...">
+                            <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                        </form>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <div id="content-page" class="content-page">
+            <div class="container">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
